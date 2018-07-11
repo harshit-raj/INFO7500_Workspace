@@ -1,0 +1,12 @@
+/**
+ * 
+ */
+package hw4.consensus.bft;
+
+/**
+ * @author harsh
+ *
+ */
+public class EIGTree {
+
+}
