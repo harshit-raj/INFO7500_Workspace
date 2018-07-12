@@ -923,3 +923,16 @@
 2018-07-09 21:19:52,204 [Worker-2] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
 2018-07-09 21:19:52,204 [Worker-2] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\harsh\Google Drive\Summer18\Crypto\Workspace\as2\src\test\resources
 2018-07-10 20:16:11,716 [Worker-5] INFO  c.g.t.t.d.PublishedGradleVersions - Gradle version information cache is up-to-date. Trying to read.
+2018-07-10 20:41:08,717 [Worker-17] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2018-07-10 20:41:08,718 [Worker-17] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\harsh\Google Drive\Summer18\Crypto\Workspace\as1\src\main\resources
+2018-07-10 20:41:08,720 [Worker-17] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2018-07-10 20:41:08,721 [Worker-17] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\harsh\Google Drive\Summer18\Crypto\Workspace\as1\src\test\resources
+2018-07-11 22:37:10,270 [Worker-6] INFO  c.g.t.t.d.PublishedGradleVersions - Gradle version information cache is out-of-date. Trying to update.
+2018-07-11 22:37:43,505 [Worker-9] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2018-07-11 22:37:43,507 [Worker-9] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\harsh\Google Drive\Summer18\Crypto\Workspace\as1\src\main\resources
+2018-07-11 22:37:43,512 [Worker-9] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2018-07-11 22:37:43,513 [Worker-9] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\harsh\Google Drive\Summer18\Crypto\Workspace\as1\src\test\resources
+2018-07-11 22:37:54,888 [Worker-9] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2018-07-11 22:37:54,889 [Worker-9] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\harsh\Google Drive\Summer18\Crypto\Workspace\as2\src\main\resources
+2018-07-11 22:37:54,893 [Worker-9] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2018-07-11 22:37:54,893 [Worker-9] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\harsh\Google Drive\Summer18\Crypto\Workspace\as2\src\test\resources

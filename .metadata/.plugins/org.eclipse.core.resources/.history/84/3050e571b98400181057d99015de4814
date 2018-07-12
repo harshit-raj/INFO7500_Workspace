@@ -1,0 +1,75 @@
+/**
+ * 
+ */
+package hw4.consensus.bft;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import hw4.net.Id;
+import hw4.net.Payload;
+
+/**
+ * @author harsh
+ *
+ */
+
+/*
+ * Add UnaouthBFT payload to payload with trace
+ * Lable for trace(most probably something to do with id)
+ */
+
+
+
+
+
+public class EIGTree {
+	Id id;
+	Payload payload;// = new UnauthBFTPayload(null, null);
+	List<EIGTree> children;// = new ArrayList<EIGTree>();
+	
+	//constructor
+	EIGTree(){
+			
+		}
+		
+	EIGTree(int nodeNum, int malNode){
+		EIGTree root = generateEIGTree(nodeNum,malNode);
+	
+	}
+
+	private EIGTree generateEIGTree(int node, int level) {
+		// TODO Auto-generated method stub
+		//System.out.println("Making tree\n Node "+ node+"level" + mal);
+		EIGTree root = new EIGTree();
+		root.payload = null;
+		
+		if(level==0) {
+			//System.out.println("returning root");
+			return root;
+		}
+		
+		children = new ArrayList<EIGTree>();
+		
+		for(int i = 0; i< node;i++) {
+			//System.out.println("childsize "+children.size() );
+			children.add(generateEIGTree(node-1,level-1));
+		}
+		
+		//System.out.println("-----------------------------"+children.size());
+		
+		
+		
+		return root;
+	}
+	
+	
+	
+	
+
+
+	
+	
+	//initailze null tree 
+
+}

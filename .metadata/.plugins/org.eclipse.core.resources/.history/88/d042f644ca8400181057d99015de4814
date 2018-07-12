@@ -1,0 +1,108 @@
+/**
+ * 
+ */
+package hw4.consensus.bft;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import hw4.net.Id;
+import hw4.net.Payload;
+
+/**
+ * @author harsh
+ *
+ */
+
+/*
+ * Add UnaouthBFT payload to payload with trace
+ * Lable for trace(most probably something to do with id)
+ */
+
+
+
+
+
+public class EIGTree {
+	Id id;
+	UnauthBFTPayload payload;// = new UnauthBFTPayload(null, null);
+	List<EIGTree> children;// = new ArrayList<EIGTree>();
+	EIGTree root;
+	//constructor
+	EIGTree(){
+			
+		}
+		
+	EIGTree(int nodeNum, int malNode){
+		root = generateEIGTree(nodeNum,malNode);
+		
+	}
+
+	
+	
+	
+	public Id getId() {
+		return id;
+	}
+
+	public void setId(Id id) {
+		this.id = id;
+	}
+
+	public Payload getPayload() {
+		return payload;
+	}
+
+	public void setPayload(UnauthBFTPayload payload) {
+		if(this.payload == null) {
+			this.payload = payload;	
+		}
+		else {
+			
+		}
+		
+	}
+
+	public List<EIGTree> getChildren() {
+		return children;
+	}
+
+	public void setChildren(List<EIGTree> children) {
+		this.children = children;
+	}
+
+	public EIGTree getRoot() {
+		return root;
+	}
+
+	public void setRoot(EIGTree root) {
+		this.root = root;
+	}
+
+	private EIGTree generateEIGTree(int node, int level) {
+		//System.out.println("Node "+ node+" level "+level);
+		// TODO Auto-generated method stub
+		//System.out.println("Making tree\n Node "+ node+"level" + mal);
+		EIGTree root = new EIGTree();
+		root.payload = null;
+		
+		if(level==0) {
+			//System.out.println("returning root");
+			//System.out.println("Returning at "+"Node "+ node+" level "+level);
+			return root;
+		}
+		
+		root.children = new ArrayList<EIGTree>();
+		//System.out.println("Loop called "+node+ " times");
+		for(int i = 0; i< node;i++) {
+			//System.out.println("childsize "+children.size() );
+			//System.out.println(" i "+  i);
+			root.children.add(generateEIGTree(node-1,level-1));
+		}
+		
+		//System.out.println("Size "+ root.children.size()+ "level "+ level);
+		
+		return root;
+	}
+	
+}

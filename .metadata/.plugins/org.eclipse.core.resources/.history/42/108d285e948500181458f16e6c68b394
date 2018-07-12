@@ -1,0 +1,146 @@
+package hw4.consensus.bft;
+
+import hw4.consensus.follow.FollowLeaderPayload;
+import hw4.net.Id;
+import hw4.net.Message;
+import hw4.net.Send;
+import hw4.net.Value;
+import hw4.net.Node;
+import hw4.net.Payload;
+
+import java.util.*;
+
+public class UnauthBFTNode extends Node {
+	private Value receivedLeaderDecisionValue;
+    private boolean isLeaderAndSentInitialValue;
+
+	EIGTree eigTree = null;
+	public UnauthBFTNode() {
+    	super();
+    	//System.out.println("Number of nodes"+super.getPeerIds().size());
+    }
+
+    @Override
+    public List<Send> send(int round) {
+    	List<Send> sendList = new ArrayList<Send>();
+    	if(eigTree == null) {
+    		//System.out.println("Initializing tree----------------------------------------------send");
+    		initTree();
+    		
+    	}
+    	
+    	if (getIsLeader()) {
+            if (getLeaderInitialValue() == null) {
+                throw new RuntimeException("Leader decision not set");
+            }
+
+            if (!isLeaderAndSentInitialValue) {
+                List<Send> sends = new ArrayList();
+                for (Id to : getPeerIds()) {
+                    sends.add(new Send(to, new FollowLeaderPayload(getLeaderInitialValue())));
+                }
+
+                isLeaderAndSentInitialValue = true;
+                return sends;
+            }
+        }
+    	
+    	
+    	
+    	List<EIGTree> levelVals = new ArrayList<EIGTree>();
+    	//System.out.println("asking for level "+ round);
+    	getLevel(eigTree,round,levelVals);
+    	//System.out.println("ID "+ super.getId());
+    	for(EIGTree et: levelVals) {
+    		UnauthBFTPayload pay;
+    		List<Id> tr = new ArrayList<Id>();
+    		if(et.payload == null) {
+    			
+    			tr.add(super.getId());
+    			pay = new UnauthBFTPayload(new Trace(tr),super.getDefaultValue());
+    		}
+    		else {
+    			Trace trace = et.getPayload().getTrace();
+    			trace = Trace.append(trace, super.getId());
+    			pay = new UnauthBFTPayload(trace,super.getDefaultValue());
+    			
+    		}
+    		
+    		
+    		for(Id target: super.getPeerIds()) {
+    			sendList.add(new Send(target,pay));
+    		}
+    		
+    	}
+    	//System.out.println("levelVals size "+ levelVals.size());
+    	
+        return sendList;
+    }
+
+    @Override
+    public void receive(int round, List<Message> messages) {
+    	
+    	if(eigTree == null) {
+    		//System.out.println("//////////////////Initializing Rec");
+    		initTree();
+    		
+    	}
+    	
+    	if(round == 0) {
+    		if (!getIsLeader()) {
+                if (this.receivedLeaderDecisionValue == null) {
+                    for (Message m : messages) {
+                        if (m.getFrom().equals(getLeaderNodeId())) {
+                            FollowLeaderPayload payload = m.getSend().getPayload(FollowLeaderPayload.class);
+                            if (payload != null) {
+                                this.receivedLeaderDecisionValue = payload.getDecisionValue();
+                            }
+                        }
+                    }
+                }
+            }
+    	}
+    	System.out.println("Rount in rec : "+ round);
+    	
+    	List<EIGTree> levelVals = new ArrayList<EIGTree>();
+    	//System.out.println("asking for level "+ round);
+    	getLevel(eigTree,round+1,levelVals);
+    	System.out.println("-------------------------Mesages: "+ messages.size()+" Tree nodes: "+levelVals.size());
+    	
+    	for(Message message : messages) {
+    		//System.out.println(message.getFrom());
+    		//System.out.println("_________________"+message);
+    		
+    	}
+    }
+
+    @Override
+    public void commit() {
+
+    }
+    
+    void initTree() {
+    	int nodeCount = super.getPeerIds().size()+1;
+		int levels = super.getRounds() ;
+		
+		eigTree = new EIGTree(nodeCount,levels).root;
+		System.out.println(eigTree.children.size()+"-------------------");
+    }
+    
+    void getLevel(EIGTree tree, int l,List<EIGTree> result){
+    	if(tree == null) {
+    		return;
+    	}
+    	if(l ==1) {
+    		//add node to list
+    		result.add(tree);
+    	}
+    	else if(l>1) {
+    		for(EIGTree et: tree.children) {
+    			getLevel(et,l-1,result);
+    		}
+    		
+    	}
+    	
+    }
+}

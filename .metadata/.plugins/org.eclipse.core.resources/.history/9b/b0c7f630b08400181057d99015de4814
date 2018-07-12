@@ -1,0 +1,40 @@
+package hw4.consensus.bft;
+
+import hw4.net.Message;
+import hw4.net.Send;
+import hw4.net.Node;
+
+import java.util.*;
+
+public class UnauthBFTNode extends Node {
+	int nodeCount = 4;
+	int malNode = 1;
+	EIGTree eigTree = null;
+    public UnauthBFTNode() {
+    	super();
+    	System.out.println("Number of nodes"+super.getPeerIds().size());
+    }
+
+    @Override
+    public List<Send> send(int round) {
+    	if(eigTree == null) {
+    		//eigTree = new EIGTree(super.getPeerIds().size()+1,super.get.size())
+    	}
+    	
+    	System.out.println("Number of nodes-------------"+(super.getPeerIds().size()+1));
+    	System.out.println("Rounds-------------"+super.getRounds());
+    	
+    	
+        return Collections.EMPTY_LIST;
+    }
+
+    @Override
+    public void receive(int round, List<Message> messages) {
+
+    }
+
+    @Override
+    public void commit() {
+
+    }
+}

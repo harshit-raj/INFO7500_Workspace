@@ -1,0 +1,84 @@
+package hw4.consensus.bft;
+
+import hw4.net.Id;
+import hw4.net.Message;
+import hw4.net.Send;
+import hw4.net.Node;
+import hw4.net.Payload;
+
+import java.util.*;
+
+public class UnauthBFTNode extends Node {
+	EIGTree eigTree = null;
+	public UnauthBFTNode() {
+    	super();
+    	//System.out.println("Number of nodes"+super.getPeerIds().size());
+    }
+
+    @Override
+    public List<Send> send(int round) {
+    	List<Send> sendList = new ArrayList<Send>();
+    	if(eigTree == null) {
+    		System.out.println("//////////////////Initializing tree");
+    		initTree();
+    		
+    	}
+    	
+    	List<EIGTree> levelVals = new ArrayList<EIGTree>();
+    	//System.out.println("asking for level "+ round);
+    	getLevel(eigTree,round+1,levelVals);
+    	//System.out.println("ID "+ super.getId());
+    	for(EIGTree et: levelVals) {
+    		Payload pay;
+    		if(et.payload == null) {
+    			pay = new UnauthBFTPayload(new Trace(new ArrayList<Id>()),super.getDefaultValue());////////////////////////////////////////////
+    		}
+    		else {
+    			pay = et.getPayload();
+    			
+    		}
+    		for(Id target: super.getPeerIds()) {
+    			sendList.add(new Send(target,pay));
+    		}
+    		
+    	}
+    	//System.out.println("levelVals size "+ levelVals.size());
+    
+        return sendList;
+    }
+
+    @Override
+    public void receive(int round, List<Message> messages) {
+
+    }
+
+    @Override
+    public void commit() {
+
+    }
+    
+    void initTree() {
+    	int nodeCount = super.getPeerIds().size()+1;
+		int levels = super.getRounds() ;
+		
+		eigTree = new EIGTree(nodeCount,levels).root;
+		System.out.println(eigTree.children.size()+"-------------------");
+    }
+    
+    void getLevel(EIGTree tree, int l,List<EIGTree> result){
+    	if(tree == null) {
+    		return;
+    	}
+    	if(l ==1) {
+    		//add node to list
+    		result.add(tree);
+    	}
+    	else if(l>1) {
+    		for(EIGTree et: tree.children) {
+    			getLevel(et,l-1,result);
+    		}
+    		
+    	}
+    	
+    }
+}
